@@ -6,6 +6,10 @@ Once the best model is selected, it will be deployed on the cloud. A local app w
 
 ## 1. Finding the best models and saving experiments
 
+Three models will be compared
+- Logistic Regression
+- BERT
+- A custom neural network
 
 ## 2. Deploying the model on the cloud
 

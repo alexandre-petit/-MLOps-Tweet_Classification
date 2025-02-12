@@ -18,3 +18,7 @@ Three models will be compared
 
 
 ## 4. Model monitoring system
+
+## 5. Blog Article (In progress)
+
+The project requires a blog article to summarize all the work done and explaining the MLOps methodology

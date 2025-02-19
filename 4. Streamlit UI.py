@@ -1,51 +1,51 @@
 import streamlit as st
 import requests
 import time
+from config import api_key
+
+
+prediction_as_text = {0: "Bad", 1: "Good"}
 
 st.title("Tweet prediction interface")
 
 st.info("Paste the Tweet in the textbox below and click 'Predict sentiment'")
 
-tweet = st.text_input("Paste tweet here")
+tweet = st.text_input("Paste the tweet here")
 
-#response = requests.get()
+# Initialisation de l'état de session pour stocker le feedback
+
+if "tweet" not in st.session_state:
+
+    st.session_state.tweet = "Ceci est un exemple de tweet"
 
 
-def print_feedback():
-    global user_feedback
-    print(user_feedback)
+if "prediction_feedback" not in st.session_state:
 
-def predict_tweet():
-    print(tweet)
+    st.session_state.prediction_feedback = ""
 
-button = st.button("Predict sentiment")#, on_click=predict_tweet)
 
-if button:
-    st.text(tweet)
-    print(tweet)
+# Bouton pour afficher le tweet
+
+if st.button("Afficher le tweet"):
+
+    st.session_state.show_tweet = True  # On active l'affichage du tweet
+
+
+# Affichage du tweet si le bouton a été cliqué
+
+if st.session_state.get("show_tweet", False):
+
+    st.write(tweet)
+
+    st.write("How was the prediction?")
+
+    feedback = st.feedback("thumbs")
     
-    st.text("How was the prediction?")
-    
-    l_col, r_col = st.columns(2)
-    
-    
-    
-    with l_col:
-        
-        #user_feedback = st.feedback("stars", on_change=print_feedback)
-        if st.button("The prediction was great"):
-            st.session_state.
-            
-    with r_col:
-        if st.button("The prediction was wrong"):
-            st.success('The downvotes was sent to the API')
-        #Resetting the button to None once the data are sent to the API
-        #button = None
+    if feedback in (0,1) and feedback != st.session_state.prediction_feedback:
+        st.session_state.prediction_feedback = feedback
 
-    #if user_feedback:
-    #    print(user_feedback)
-    #    st.text(user_feedback)
-    #    st.text("Feedback have been sent to the server")
-        
+
+    if st.session_state.prediction_feedback in (0,1):
+        st.write(prediction_as_text[feedback])
     
     

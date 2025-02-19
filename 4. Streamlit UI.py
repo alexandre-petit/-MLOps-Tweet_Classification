@@ -23,19 +23,29 @@ if "prediction_feedback" not in st.session_state:
 
     st.session_state.prediction_feedback = ""
 
-
+st.session_state.response = None
 # Bouton pour afficher le tweet
 
 if st.button("Afficher le tweet"):
 
     st.session_state.show_tweet = True  # On active l'affichage du tweet
+    
+    st.session_state.response = requests.post("http://127.0.0.1:8000/random", json={"message": "Send me a random number!"})
+    response = st.session_state.response
+    
+    
+    if response.status_code == 200:
+        prediction = response.json().get("random_value")
+        st.write(f"Received random value: {prediction}")
+    else:
+        st.error("Failed to get random value.")
 
 
 # Affichage du tweet si le bouton a été cliqué
 
-if st.session_state.get("show_tweet", False):
+if st.session_state.get("show_tweet", False) and st.session_state.response:
 
-    st.write(tweet)
+    st.write(prediction_as_text[prediction])
 
     st.write("How was the prediction?")
 

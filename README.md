@@ -13,9 +13,11 @@ Three models will be compared
 
 ## 2. Deploying the model on the cloud
 
+The API and the final will be deployed on Azure WebApp. At the moment, the API is tested locally. The API randomly send 0 or 1 to see if the streamlit app works correctly
 
 ## 3. Local App
 
+The Application has a simple layout with a title, a text input widget, and a predict button. Once the predict button is clicked. The POST request is sent and the prediction will be processed by the local app. A thumbs widget will appear to give a feedback to the model
 
 ## 4. Model monitoring system
 

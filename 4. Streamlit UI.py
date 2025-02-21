@@ -19,14 +19,15 @@ if "tweet" not in st.session_state:
     st.session_state.tweet = "Ceci est un exemple de tweet"
 
 
-if "prediction_feedback" not in st.session_state:
+#if "prediction_feedback" not in st.session_state:
 
-    st.session_state.prediction_feedback = ""
+st.session_state.prediction_feedback = None
 
 st.session_state.response = None
-# Bouton pour afficher le tweet
+st.session_state.feeback_returned = None
 
-if st.button("Afficher le tweet"):
+# Predict button and post request
+if st.button("Predict tweet sentiment"):
 
     st.session_state.show_tweet = True  # On active l'affichage du tweet
     
@@ -34,14 +35,27 @@ if st.button("Afficher le tweet"):
     response = st.session_state.response
     
     
+    test_feedback = {
+            "tweet": tweet,
+            "sentiment": 1,
+            "feedback": 1
+        }
+    st.session_state.feedback_returned = requests.post("http://127.0.0.1:8000/feedback", json=test_feedback)
+    feedback_returned = st.session_state.feedback_returned
+    
     if response.status_code == 200:
         prediction = response.json().get("random_value")
         st.write(f"Received random value: {prediction}")
     else:
         st.error("Failed to get random value.")
 
+    if feedback_returned.status_code == 200:
+        st.write(f"The feedback was stored by the API")
+    else:
+        st.error("Failed to receive feedback")
 
-# Affichage du tweet si le bouton a été cliqué
+
+# Showing tweet after sending predicting and displaying feedback widget
 
 if st.session_state.get("show_tweet", False) and st.session_state.response:
 
@@ -50,9 +64,17 @@ if st.session_state.get("show_tweet", False) and st.session_state.response:
     st.write("How was the prediction?")
 
     feedback = st.feedback("thumbs")
-    
+    print(feedback)
     if feedback in (0,1) and feedback != st.session_state.prediction_feedback:
         st.session_state.prediction_feedback = feedback
+        
+        post_feedback = {
+            "tweet": st.session_state.tweet,
+            "sentiment": prediction,
+            "feedback": feedback
+        }
+        
+        requests.post("http://127.0.0.1:8000/feedback", json=post_feedback)
 
 
     if st.session_state.prediction_feedback in (0,1):

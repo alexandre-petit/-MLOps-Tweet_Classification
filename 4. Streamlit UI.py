@@ -34,25 +34,12 @@ if st.button("Predict tweet sentiment"):
     st.session_state.response = requests.post("http://127.0.0.1:8000/random", json={"message": "Send me a random number!"})
     response = st.session_state.response
     
-    
-    test_feedback = {
-            "tweet": tweet,
-            "sentiment": 1,
-            "feedback": 1
-        }
-    st.session_state.feedback_returned = requests.post("http://127.0.0.1:8000/feedback", json=test_feedback)
-    feedback_returned = st.session_state.feedback_returned
-    
     if response.status_code == 200:
         prediction = response.json().get("random_value")
         st.write(f"Received random value: {prediction}")
     else:
         st.error("Failed to get random value.")
-
-    if feedback_returned.status_code == 200:
-        st.write(f"The feedback was stored by the API")
-    else:
-        st.error("Failed to receive feedback")
+    
 
 
 # Showing tweet after sending predicting and displaying feedback widget

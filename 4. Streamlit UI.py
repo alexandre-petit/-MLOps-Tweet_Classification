@@ -3,8 +3,10 @@ import requests
 import time
 from config import api_key
 
+api_url = "http://127.0.0.1:8000"
 
-prediction_as_text = {0: "Bad", 1: "Good"}
+
+prediction_as_text = {0: "Negative", 1: "Positive"}
 
 st.title("Tweet prediction interface")
 
@@ -31,7 +33,7 @@ if st.button("Predict tweet sentiment"):
 
     st.session_state.show_tweet = True  # On active l'affichage du tweet
     
-    st.session_state.response = requests.post("http://127.0.0.1:8000/random", json={"message": "Send me a random number!"})
+    st.session_state.response = requests.post(api_url + "/random", json={"message": "Send me a random number!"})
     response = st.session_state.response
     
     if response.status_code == 200:
@@ -46,7 +48,7 @@ if st.button("Predict tweet sentiment"):
 
 if st.session_state.get("show_tweet", False) and st.session_state.response:
 
-    st.write(prediction_as_text[prediction])
+    st.write(f"The sentiment of this tweet is {prediction_as_text[prediction]}")
 
     st.write("How was the prediction?")
 
@@ -61,7 +63,7 @@ if st.session_state.get("show_tweet", False) and st.session_state.response:
             "feedback": feedback
         }
         
-        requests.post("http://127.0.0.1:8000/feedback", json=post_feedback)
+        requests.post(api_url + "/feedback", json=post_feedback)
 
 
     if st.session_state.prediction_feedback in (0,1):

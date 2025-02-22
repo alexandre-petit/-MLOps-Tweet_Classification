@@ -27,7 +27,7 @@ async def get_feedback(data: dict):
     timestamp = dt.now()
     
     #data = data.dict()
-    data['datetime'] = timestamp
+    data['datetime'] = timestamp.strftime("%Y-%m-%d %H:%M:%S")
     
     
     try:

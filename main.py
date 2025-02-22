@@ -47,3 +47,6 @@ async def get_feedback(data: dict):
         feedback_df.loc[0] = data
         
     feedback_df.to_csv("feedback.csv", index=False)
+    
+    #delete after finishing debugging
+    print(feedback_df.tail(1))

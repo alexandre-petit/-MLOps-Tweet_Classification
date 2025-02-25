@@ -1,5 +1,7 @@
 sentiment140.zip
 sentiment140/
+mlruns/
 config.py
 feedback.csv
 preprocessed_tweet.csv
+Exemple.ipynb

@@ -3,7 +3,7 @@ import requests
 import time
 from config import api_key
 
-api_url = "https://orange-rock-0acf5ca03.6.azurestaticapps.net" #"http://127.0.0.1:8000"
+api_url = "https://mango-tree-08b7ad603.6.azurestaticapps.net" #"http://127.0.0.1:8000"
 
 
 prediction_as_text = {0: "Negative", 1: "Positive"}

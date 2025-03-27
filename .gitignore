@@ -5,3 +5,4 @@ config.py
 feedback.csv
 preprocessed_tweet.csv
 Exemple.ipynb
+cardiffnlp/
